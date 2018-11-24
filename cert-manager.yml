@@ -1,0 +1,5 @@
+ingressShim:
+  defaultIssuerName: letsencrypt-prod
+  defaultIssuerKind: ClusterIssuer
+  defaultACMEChallengeType: dns01
+  defaultACMEDNS01ChallengeProvider: cf-dns
