@@ -9,10 +9,12 @@
 - Github OAuth application ID and secret
 - Helm installed
 
-You can do this with any DNS provider with support for cert-manager, and certainly using any registrar.
+The focus of this tutorial is on working with GCP and Kubernetes. The above prerequisites are out of scope. If the prerequisites become a blocking issue for completing the tutorial, open an issue and I can add directions.
+
+These steps will work with any DNS provider with support for cert-manager, and certainly using any registrar. If you change DNS providers you should follow the cert-manager reference documentation to modify `issuer.yml` for your provider. This mostly pertains to authentication. 
 
 ### Steps
-1. Register your domain and point the DNS servers to Cloudflare (out of scope for this tutorial. I'll add it if anyone needs it).
+1. Register your domain and point the DNS servers to Cloudflare.
 2. Get your Cloudflare API Key
    - Log in to the Cloudflare dashboard.
    - Click the icon at the very top right of the screen. 
