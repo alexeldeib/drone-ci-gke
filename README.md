@@ -9,7 +9,7 @@
 - Github OAuth application ID and secret
 - Helm installed
 
-You can do this with any DNS provider with support for cert-manager, and certainly using any registrar. I used Namecheap because I had existing domains with them and found domains for pennies.
+You can do this with any DNS provider with support for cert-manager, and certainly using any registrar. I used Namecheap.
 
 ### Steps
 1. Register your domain and point the DNS servers to Cloudflare (out of scope for this tutorial. I'll add it if anyone needs it).
