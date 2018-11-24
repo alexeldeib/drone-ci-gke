@@ -4,12 +4,12 @@
 - GCP account
 - gcloud downloaded and initialized
 - Cloudflare account
-- You must possess a domain or subdomain you wish to use. I purchased some for $.99 from Namecheap for testing; Google/CloudFlare are nicer to work with, if they have what you want.
+- You must possess a domain or subdomain you wish to use. I used Namecheap. I hear good things about Cloudflare and Google.
 - Github account
 - Github OAuth application ID and secret
 - Helm installed
 
-You can do this with any DNS provider with support for cert-manager, and certainly using any registrar. I used Namecheap.
+You can do this with any DNS provider with support for cert-manager, and certainly using any registrar.
 
 ### Steps
 1. Register your domain and point the DNS servers to Cloudflare (out of scope for this tutorial. I'll add it if anyone needs it).
