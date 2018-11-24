@@ -28,6 +28,8 @@ helm init --service-account tiller # wait after this until tiller is ready
 sleep 10s
 
 # Cert-manager config. Describes a cluster issuer with CloudFlare DNS01 challenge to use automatically to acquire certificates.
+# N.b.: the secret must be in kube-system for cluster issuer, or same namespace as the issuer if kind=Issuer.
+kubectl create secret generic cf-key -n kube-system --from-literal=cloudflare-api-key=${YOUR_KEY}
 helm install --name cert-manager stable/cert-manager --namespace kube-system -f cert-manager.yml
 kubectl apply -f issuer.yml
 
