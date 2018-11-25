@@ -78,7 +78,7 @@ helm install --name cert-manager stable/cert-manager --namespace kube-system -f 
 #### ClusterIssuer
 In the previous step we told cert-manager the defaults to use for acquiring certificates automatically. However, the issuer and challenge provider we specified don't exist yet.  Let's create them.
 
-    In the remainder of the tutorial we use the `letsencrypt-prod` ClusterIssuer. The Let's Encrypt production endpoint imposes rate limiting on requests which may cause issues for testing scenarios. If you would like to test the configuration first, you may use the staging endpoint.
+In the remainder of the tutorial we use the `letsencrypt-prod` ClusterIssuer. The Let's Encrypt production endpoint imposes rate limiting on requests which may cause issues for testing scenarios. If you would like to test the configuration first, you may use the staging endpoint.
 
 Both manifests are below for your convenience. To follow the tutorial, customize and apply the `letsencrypt-prod` manifest.
 
