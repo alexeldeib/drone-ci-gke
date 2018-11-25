@@ -4,15 +4,17 @@
 - GCP account
 - gcloud downloaded and initialized
 - Cloudflare account
-- You must possess a domain or subdomain you wish to use. I purchased some for $.99 from Namecheap for testing; Google/CloudFlare are nicer to work with, if they have what you want.
+- You must possess a domain or subdomain you wish to use. I used Namecheap. I hear good things about Cloudflare and Google.
 - Github account
 - Github OAuth application ID and secret
 - Helm installed
 
-You can do this with any DNS provider with support for cert-manager, and certainly using any registrar. I used Namecheap because I had existing domains with them and found domains for pennies.
+The focus of this tutorial is on working with GCP and Kubernetes. The above prerequisites are out of scope. If the prerequisites become a blocking issue for completing the tutorial, open an issue and I can add directions.
+
+These steps will work with any DNS provider with support for cert-manager, and certainly using any registrar. If you change DNS providers you should follow the cert-manager reference documentation to modify `issuer.yml` for your provider. This mostly pertains to authentication. 
 
 ### Steps
-1. Register your domain and point the DNS servers to Cloudflare (out of scope for this tutorial. I'll add it if anyone needs it).
+1. Register your domain and point the DNS servers to Cloudflare.
 2. Get your Cloudflare API Key
    - Log in to the Cloudflare dashboard.
    - Click the icon at the very top right of the screen.
