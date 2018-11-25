@@ -38,20 +38,20 @@ These steps will work with any DNS provider with support for cert-manager, and c
    ```
 6. Create a service account for `helm/tiller` in the cluster.
    ```
-    kubectl create serviceaccount tiller -n kube-system
+   kubectl create serviceaccount tiller -n kube-system
    ```
 7. Bind that service account to a role with permissions appropriate for your `helm` deployment. In this scenario, I'm using `cluster-admin`. You may choose to restrict this.
    ```
-    kubectl create clusterrolebinding tiller-admin --clusterrole cluster-admin --serviceaccount tiller
+   kubectl create clusterrolebinding tiller-admin --clusterrole cluster-admin --serviceaccount tiller
    ```
 8. Initialize `helm` with the service account created previously. Wait a few seconds after until a `tiller` pod is ready on the cluster.
    ```
-    helm init --service-account tiller
-    sleep 10s
+   helm init --service-account tiller
+   sleep 10s
    ```
 9. Create a Kubernetes secret to hold the Cloudflare API key for the ClusterIssuer
    ```
-    kubectl create secret generic cf-key -n kube-system --from-literal=cloudflare-api-key=${YOUR_KEY}
+   kubectl create secret generic cf-key -n kube-system --from-literal=cloudflare-api-key=${YOUR_KEY}
    ```
 10. Install `cert-manager` in the cluster. Here's a manifest, following the naming schemes in this tutorial.
     ```
@@ -63,7 +63,7 @@ These steps will work with any DNS provider with support for cert-manager, and c
       defaultACMEDNS01ChallengeProvider: cf-dns
     EOF
 
-     helm install --name cert-manager stable/cert-manager --namespace kube-system -f cert-manager.yml
+    helm install --name cert-manager stable/cert-manager --namespace kube-system -f cert-manager.yml
     ```
 11. In the previous step we told cert-manager the defaults to use for acquiring certificates automatically. However, the issuer and challenge provider we specified don't exist yet.  Let's create them.
 
@@ -83,7 +83,7 @@ These steps will work with any DNS provider with support for cert-manager, and c
     EOF
     ```
     ```
-     helm upgrade --install cert-manager stable/cert-manager -f cert-manager.yml
+    helm upgrade --install cert-manager stable/cert-manager -f cert-manager.yml
     ```
     Here is the manifest to create the `letsencrypt-staging` ClusterIssuer:
 
@@ -136,7 +136,7 @@ These steps will work with any DNS provider with support for cert-manager, and c
     ```
     Finally:
     ```
-      kubectl apply -f issuer.yml
+    kubectl apply -f issuer.yml
     ```
 12. Install the `nginx-ingress` Helm chart to manage ingress, using the static IP we previously acquired:
     ```
