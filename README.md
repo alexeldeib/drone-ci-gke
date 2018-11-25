@@ -11,7 +11,7 @@
 
 The focus of this tutorial is on working with GCP and Kubernetes. The above prerequisites are out of scope. If the prerequisites become a blocking issue for completing the tutorial, open an issue and I can add directions.
 
-These steps will work with any DNS provider with support for cert-manager, and certainly using any registrar. If you change DNS providers you should follow the cert-manager reference documentation to modify `issuer.yml` for your provider. This mostly pertains to authentication. 
+These steps will work with any DNS provider with support for cert-manager, and certainly using any registrar. If you change DNS providers you should follow the cert-manager reference documentation to modify `issuer.yml` for your provider. This mostly pertains to authentication.
 
 ### Steps
 1. Register your domain and point the DNS servers to Cloudflare.
@@ -54,16 +54,15 @@ These steps will work with any DNS provider with support for cert-manager, and c
     kubectl create secret generic cf-key -n kube-system --from-literal=cloudflare-api-key=${YOUR_KEY}
    ```
 10. Install `cert-manager` in the cluster. Here's a manifest, following the naming schemes in this tutorial.
-    ```yaml
-      # cert-manager.yml
-      ingressShim:
-        defaultIssuerName: letsencrypt-prod
-        defaultIssuerKind: ClusterIssuer
-        defaultACMEChallengeType: dns01
-        defaultACMEDNS01ChallengeProvider: cf-dns
     ```
-    Back in a shell:
-    ```
+    cat > cert-manager.yml <<EOF
+    ingressShim:
+      defaultIssuerName: letsencrypt-prod
+      defaultIssuerKind: ClusterIssuer
+      defaultACMEChallengeType: dns01
+      defaultACMEDNS01ChallengeProvider: cf-dns
+    EOF
+
      helm install --name cert-manager stable/cert-manager --namespace kube-system -f cert-manager.yml
     ```
 11. In the previous step we told cert-manager the defaults to use for acquiring certificates automatically. However, the issuer and challenge provider we specified don't exist yet.  Let's create them.
@@ -74,21 +73,22 @@ These steps will work with any DNS provider with support for cert-manager, and c
 
     ### Using the staging endpoint
     If you would like to use the staging endpoint, you should update the `defaultIssuerName` from when we deployed `cert-manager`:
-    ```yaml
-      # cert-manager.yml
-      ingressShim:
-        defaultIssuerName: letsencrypt-staging
-        defaultIssuerKind: ClusterIssuer
-        defaultACMEChallengeType: dns01
-        defaultACMEDNS01ChallengeProvider: cf-dns
+    ```
+    cat > cert-manager.yml <<EOF
+    ingressShim:
+      defaultIssuerName: letsencrypt-staging
+      defaultIssuerKind: ClusterIssuer
+      defaultACMEChallengeType: dns01
+      defaultACMEDNS01ChallengeProvider: cf-dns
+    EOF
     ```
     ```
      helm upgrade --install cert-manager stable/cert-manager -f cert-manager.yml
     ```
     Here is the manifest to create the `letsencrypt-staging` ClusterIssuer:
 
-    ```yaml
-    # issuer.yml
+    ```
+    cat > issuer.yml <<EOF
     apiVersion: certmanager.k8s.io/v1alpha1
     kind: ClusterIssuer
     metadata:
@@ -107,12 +107,13 @@ These steps will work with any DNS provider with support for cert-manager, and c
                 apiKeySecretRef:
                   name: cf-key
                   key: cloudflare-api-key
+    EOF
     ```
 
     ### Using the production endpoint
     Here is the manifest to create the `letsencrypt-prod` ClusterIssuer:
-    ```yaml
-    # issuer.yml
+    ```
+    cat > issuer.yml <<EOF
     apiVersion: certmanager.k8s.io/v1alpha1
     kind: ClusterIssuer
     metadata:
@@ -131,20 +132,20 @@ These steps will work with any DNS provider with support for cert-manager, and c
                 apiKeySecretRef:
                   name: cf-key
                   key: cloudflare-api-key
-      ```
-
-      Finally:
-      ```
-       kubectl apply -f issuer.yml
-      ```
+    EOF
+    ```
+    Finally:
+    ```
+      kubectl apply -f issuer.yml
+    ```
 12. Install the `nginx-ingress` Helm chart to manage ingress, using the static IP we previously acquired:
     ```
     helm install --name nginx stable/nginx-ingress --set controller.service.loadBalancerIP=${STATIC_IP}
     ```
 
 12. Install `drone` via `helm`. Customize the following values to deploy using your personal GitHub account as an admin.
-    ```yaml
-    # drone.yml
+    ```
+    cat > drone.yml <<EOF
     ingress:
       enabled: true
 
@@ -171,6 +172,7 @@ These steps will work with any DNS provider with support for cert-manager, and c
         DRONE_ADMIN: ${YOUR_GITHUB_USERNAME}
         DRONE_GITHUB_CLIENT: ${YOUR_CLIENT_ID}
         DRONE_GITHUB_SECRET: ${YOUR_CLIENT_SECRET}
+    EOF
     ```
     Deploy.
     ```
