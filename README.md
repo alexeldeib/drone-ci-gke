@@ -82,7 +82,7 @@ In the previous step we told cert-manager the defaults to use for acquiring cert
 
 Both manifests are below for your convenience. To follow the tutorial, customize and apply the `letsencrypt-prod` manifest.
 
-### Using the staging endpoint
+#### Using the staging endpoint
 If you would like to use the staging endpoint, you should update the `defaultIssuerName` from when we deployed `cert-manager`:
 ```
 cat > cert-manager.yml <<EOF
@@ -121,7 +121,7 @@ spec:
 EOF
 ```
 
- ### Using the production endpoint
+ #### Using the production endpoint
  Here is the manifest to create the `letsencrypt-prod` ClusterIssuer:
  ```
  cat > issuer.yml <<EOF
